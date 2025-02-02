@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>San Valentín</title>
+    <style>
+        /* Estilos para el fondo rosado claro y corazones */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #FFC0CB; /* Fondo rosado claro */
+            background-image: url("https://i.postimg.cc/PqfX9ZxS/68f634fe39f11f411252fc272f6b5dae-w200.gif");
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            text-align: center;
+        }
+
+        h1 {
+            color: #FFFFFF; /* Color del texto */
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        img {
+            width: 200px;
+            height: auto;
+            margin-bottom: 20px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease; /* Transición para cambios de tamaño */
+        }
+
+        button#si {
+            background-color: #32CD32; /* Verde para el botón Sí */
+            color: white;
+        }
+
+        button#no {
+            background-color: #FF4500; /* Naranja para el botón No */
+            color: white;
+        }
+
+        button:hover {
+            opacity: 0.8;
+        }
+
+        /* Estilos para el cuadro de diálogo */
+        .dialog {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            z-index: 1000;
+        }
+
+        .dialog img {
+            width: 100px;
+            height: auto;
+            margin-bottom: 10px;
+        }
+
+        .dialog p {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+
+        .dialog button {
+            padding: 10px 20px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #32CD32;
+            color: white;
+        }
+
+        .dialog button:hover {
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <h1>¿Joss amorcito de mi vida quieres ser mi San Valentín? ❤️🥺</h1>
+    <img src="https://i.postimg.cc/3NHNWjPX/descarga-gatom.gif" alt="Imagen de San Valentín">
+    <div class="buttons">
+        <button id="si">Sí</button>
+        <button id="no">No</button>
+    </div>
+
+    <!-- Cuadro de diálogo para el botón Sí -->
+    <div id="dialogSi" class="dialog">
+        <img src="https://i.postimg.cc/Gtr3bLyz/c3bb4d7ea3365dce2df03e17e659d058.gif" alt="Imagen de Sí">
+        <p>Sabia que dirias que si te amoooooo 💖💖💖💖</p>
+        <button onclick="cerrarDialogo('dialogSi')">Cerrar</button>
+    </div>
+
+    <!-- Cuadro de diálogo para el botón No -->
+    <div id="dialogNo" class="dialog">
+        <img src="https://i.postimg.cc/0N2Nw2W4/Gato-Enfadado.gif" alt="Imagen de No">
+        <p id="fraseNo">¡Oh no! ¿En serio? 😢</p>
+        <button onclick="cerrarDialogo('dialogNo')">Cerrar</button>
+    </div>
+
+    <script>
+        // Variables para controlar el tamaño de los botones
+        let escalaNo = 1; // Escala inicial del botón "No"
+        let escalaSi = 1; // Escala inicial del botón "Sí"
+
+        // Funcionalidad para el botón Sí
+        document.getElementById("si").addEventListener("click", function() {
+            document.getElementById("dialogSi").style.display = "block";
+        });
+
+        // Funcionalidad para el botón No
+        document.getElementById("no").addEventListener("click", function() {
+            // Mostrar el cuadro de diálogo
+            document.getElementById("dialogNo").style.display = "block";
+
+            // Ocultar el cuadro de diálogo después de 5 segundos
+            setTimeout(function() {
+                document.getElementById("dialogNo").style.display = "none";
+
+                // Reducir el tamaño del botón "No" y aumentar el del botón "Sí"
+                escalaNo *= 0.9; // Reduce el tamaño del botón "No" al 90% del tamaño actual
+                escalaSi *= 1.1; // Aumenta el tamaño del botón "Sí" al 110% del tamaño actual
+
+                // Aplicar los cambios de tamaño
+                document.getElementById("no").style.transform = `scale(${escalaNo})`;
+                document.getElementById("si").style.transform = `scale(${escalaSi})`;
+
+                // Si el botón "No" es demasiado pequeño, ocultarlo
+                if (escalaNo < 0.3) {
+                    document.getElementById("no").style.display = "none";
+                }
+            }, 5000); // 5000 milisegundos = 5 segundos
+
+            // Frases predefinidas para el botón No
+            const frases = [
+                "la respuesta correcta era si 🥺🥺🥺",
+                "¡Piénsalo de nuevo! 💔",
+                "Se que quieres poner si :) ",
+                "¡No te rindas amor! 💖"
+            ];
+            const fraseAleatoria = frases[Math.floor(Math.random() * frases.length)];
+            document.getElementById("fraseNo").textContent = fraseAleatoria;
+        });
+
+        // Función para cerrar el cuadro de diálogo manualmente
+        function cerrarDialogo(id) {
+            document.getElementById(id).style.display = "none";
+        }
+    </script>
+</body>
+</html>
